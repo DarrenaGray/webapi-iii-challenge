@@ -89,8 +89,24 @@ router.put('/:id', (req, res) => {
             res.status(500).json({
                 error: err,
                 message: "The user could not be updated."
-            })
+            });
+        });
+});
+
+router.get('/:id/posts', (req, res) => {
+    const posts = req.params.id;
+    Users
+        .getUserPosts(posts)
+        .then(post => {
+            res.status(200).json(post);
         })
-})
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "Error getting posts for this user."
+            });
+        });
+});
+
 
 module.exports = router;
