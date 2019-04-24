@@ -36,7 +36,22 @@ router.get('/:id', (req, res) => {
                 error: err,
                 message: "The user information could not be retrieved."
             })
+        });
+});
+
+router.post('/', (req, res) => {
+    const userInfo = req.body;
+    Users
+        .insert(userInfo)
+        .then(user => {
+            res.status(201).json(user);
         })
-})
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "There was an error while saving the user to the database."
+            })
+        });
+});
 
 module.exports = router;
