@@ -18,4 +18,25 @@ router.get('/', (req, res) => {
         });
 });
 
+router.get('/:id', (req, res) => {
+    const userId = req.params.id;
+    Users
+        .getById(userId)
+        .then(user => {
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(404).json({
+                    message: "The user with the specified ID does not exist"
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "The user information could not be retrieved."
+            })
+        })
+})
+
 module.exports = router;
