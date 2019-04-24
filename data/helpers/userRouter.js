@@ -74,6 +74,22 @@ router.delete('/:id', (req, res) => {
                 error: err,
                 message: "The user could not be deleted."
             })
+        });
+});
+
+router.put('/:id', (req, res) => {
+    const userId = req.params.id;
+    const userInfo = req.body;
+    Users
+        .update(userId, userInfo)
+        .then(updatedUser => {
+            res.status(200).json(updatedUser);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "The user could not be updated."
+            })
         })
 })
 
