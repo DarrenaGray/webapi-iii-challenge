@@ -18,26 +18,26 @@ router.get('/', (req, res) => {
         });
 });
 
-// router.get('/:id', (req, res) => {
-//     const postId = req.params.id;
-//     Posts
-//         .getById(postId)
-//         .then(post => {
-//             if (post) {
-//                 res.json(post);
-//             } else {
-//                 res.status(404).json({
-//                     message: "The post with the specified ID does not exist."
-//                 });
-//             }
-//         })
-//         .catch(err => {
-//             res.status(500).json({
-//                 error: err,
-//                 message: "The post information could not be retrieved."
-//             })
-//         });
-// });
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    Posts
+        .getById(id)
+        .then(post => {
+            if (post) {
+                res.json(post);
+            } else {
+                res.status(404).json({
+                    message: "The post with the specified ID does not exist."
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "The post information could not be retrieved."
+            })
+        });
+});
 
 router.post('/', (req, res) => {
     const { user_id, text } = req.body;
@@ -54,44 +54,44 @@ router.post('/', (req, res) => {
         });
 });
 
-// router.delete('/:id', (req, res) => {
-//     const { id } = req.params;
-//     Posts
-//         .remove(id)
-//         .then(deletedpost => {
-//             if (deletedpost) {
-//                 res.status(201).json({
-//                     message: "The post was deleted."
-//                 });
-//             } else {
-//                 res.status(404).json({
-//                     message: "The post with the specified ID does not exist."
-//                 });
-//             }
-//         })
-//         .catch(err => {
-//             res.status(500).json({
-//                 error: err,
-//                 message: "The post could not be deleted."
-//             })
-//         });
-// });
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    Posts
+        .remove(id)
+        .then(deletedpost => {
+            if (deletedpost) {
+                res.status(201).json({
+                    message: "The post was deleted."
+                });
+            } else {
+                res.status(404).json({
+                    message: "The post with the specified ID does not exist."
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "The post could not be deleted."
+            })
+        });
+});
 
-// router.put('/:id', (req, res) => {
-//     const postId = req.params.id;
-//     const postInfo = req.body;
-//     Posts
-//         .update(postId, postInfo)
-//         .then(updatedpost => {
-//             res.status(200).json(updatedpost);
-//         })
-//         .catch(err => {
-//             res.status(500).json({
-//                 error: err,
-//                 message: "The post could not be updated."
-//             });
-//         });
-// });
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const text = req.body;
+    Posts
+        .update(id, text)
+        .then(updatedpost => {
+            res.status(200).json(updatedpost);
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err,
+                message: "The post could not be updated."
+            });
+        });
+});
 
 
 module.exports = router;
