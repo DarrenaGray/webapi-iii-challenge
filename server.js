@@ -5,6 +5,7 @@ const morgan = require('morgan')
 const server = express();
 
 const usersRouter = require('./data/helpers/userRouter');
+const postsRouter = require('./data/helpers/postRouter');
 
 server.use(express.json());
 server.use(helmet());
@@ -15,5 +16,6 @@ server.get('/', (req, res) => {
 });
 
 server.use('/api/users', usersRouter);
+server.use('/api/posts', postsRouter);
 
 module.exports = server;
