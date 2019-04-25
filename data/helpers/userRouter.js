@@ -2,7 +2,21 @@ const express = require('express');
 
 const Users = require('./userDb');
 
+
 const router = express.Router();
+
+function capitalized() {
+    return function (req, res, next) {
+        const { name } = req.body;
+        if (name === name.charAt(0).toUpperCase() + name.slice(1)) {
+            next();
+        } else {
+            res.status(400).json({
+                message: "Name needs to be capitalized."
+            })
+        }
+    }
+}
 
 router.get('/', (req, res) => {
     Users
@@ -39,7 +53,7 @@ router.get('/:id', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+router.post('/', capitalized(), (req, res) => {
     const userInfo = req.body;
     Users
         .insert(userInfo)
@@ -49,7 +63,7 @@ router.post('/', (req, res) => {
         .catch(err => {
             res.status(500).json({
                 error: err,
-                message: "There was an error while saving the user to the database."
+                message: "This name already exists."
             })
         });
 });
@@ -77,7 +91,7 @@ router.delete('/:id', (req, res) => {
         });
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', capitalized(), (req, res) => {
     const userId = req.params.id;
     const userInfo = req.body;
     Users

@@ -1,11 +1,12 @@
 const express = require('express');
 const helmet = require('helmet');
-const morgan = require('morgan')
+const morgan = require('morgan');
 
 const server = express();
 
 const usersRouter = require('./data/helpers/userRouter');
 const postsRouter = require('./data/helpers/postRouter');
+
 
 server.use(express.json());
 server.use(helmet());
